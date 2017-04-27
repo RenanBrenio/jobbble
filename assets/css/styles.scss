@@ -19,6 +19,17 @@ header{
 	h1{
 		font-family: 'Pacifico', cursive;
 		margin: 0;
+		font-size: 36px;
+	}
+	form{
+		width: 30%;
+		input{
+			height: 50px;
+			width: 100%;
+			border: 3px solid #000;
+			outline: none !important;
+			padding: 0 15px;
+		}
 	}
 	label{
 		display: inline-block;

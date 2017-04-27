@@ -17,8 +17,8 @@
 		<header>
 			<div class="container">
 				<h1>jobbble</h1>
-				<form ng-submit="search()">
-					<input type="text" id="search" ng-model="shotsSearch" ng-init="car">
+				<form onSubmit="return false">
+					<input type="text" id="search" ng-model="shotsSearch" placeholder="Search for a shot">
 				</form>
 				<label for="check-shots-size">
 					<i class="ti-layout-grid3-alt"></i>
@@ -37,11 +37,12 @@
 		</ul>
 	</main>
 
-	<script src="../bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular/angular.js"></script>
 	<script>
 		var app = angular.module('jobbble', []);
 		app.controller('shotsController', function($scope, $http) {
 			$http.defaults.headers.common['Authorization'] = 'Bearer a33efd0686dd49a3250322b17b2d73a3e8e9c585387321955ec0aebe0135c3a7';
+		    //$http.get("https://api.dribbble.com/v1/shots?page=2&per_page=6")
 		    $http.get("https://api.dribbble.com/v1/shots")
 		    .then(function(response) {
 		        $scope.shots = response.data;
