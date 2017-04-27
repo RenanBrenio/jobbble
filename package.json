@@ -1,0 +1,22 @@
+{
+  "name": "dribbble-api",
+  "version": "1.0.0",
+  "description": "a simple application using dribbble API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \\\\\\\"Error: no test specified\\\\\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RenanBrenio/dribbble-api-connect.git"
+  },
+  "keywords": [
+    "dribbble"
+  ],
+  "author": "Renan Breno",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RenanBrenio/dribbble-api-connect/issues"
+  },
+  "homepage": "https://github.com/RenanBrenio/dribbble-api-connect#readme"
+}
