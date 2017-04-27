@@ -1,0 +1,24 @@
+{
+  "name": "jobbble",
+  "description": "a simple application using dribbble API",
+  "main": "index.js",
+  "authors": [
+    "Renan Breno"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "dribbble"
+  ],
+  "homepage": "https://github.com/RenanBrenio/jobbble",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.4"
+  }
+}
