@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Pacifico|Raleway:300,400,700');
 
 *{
 	box-sizing: border-box;
@@ -76,14 +76,29 @@ header{
   	}
   	a {
     	display: block;
+    	border: 3px solid #000;
+  		background: #000;
+		transition: all .3s ease;
+		text-decoration: none;
+		font-family: 'Raleway';
+		font-weight: 300;
+		line-height: 1;
+  	}
+  	span{
+  		display: block;
+  		color: #fff;
+  		margin: 0;
+  		padding: 15px;
   	}
 }
 input:checked ~ {
 	header label .switch:before{
 		transform: translateX(75%);
 	}
-	section .shots li{
-		flex-basis: 33.333%;
+	.shots{
+		li{
+			flex-basis: 33.333%;
+		}
 	}
 }
 .hidden{

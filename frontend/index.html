@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="assets/css/themify-icons.css">
 	<link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body>
+<body ng-app="jobbble">
 	<input type="checkbox" id="check-shots-size" class="hidden">
 	<header>
 		<div class="container">
@@ -23,13 +23,26 @@
 			</label>
 		</div>
 	</header>
-	<section>
-		<div class="container">
-			<ul class="shots clearfix"></ul>
-		</div>
-	</section>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="assets/js/jribbble.js"></script>
-	<script src="assets/js/main.js"></script>
+	<ul class="shots container" ng-controller="shotsController">
+		<li ng-repeat="shot in shots">
+			<a href="">
+				<img src="{{shot.images.normal}}" alt="{{shot.title}}" title="{{shot.title}}">
+				<span>{{shot.title}}</span>
+			</a>
+		</li>
+	</ul>
+
+	<script src="../bower_components/angular/angular.js"></script>
+	<script>
+		var app = angular.module('jobbble', []);
+		app.controller('shotsController', function($scope, $http) {
+			$http.defaults.headers.common['Authorization'] = 'Bearer a33efd0686dd49a3250322b17b2d73a3e8e9c585387321955ec0aebe0135c3a7';
+		    $http.get("https://api.dribbble.com/v1/shots")
+		    .then(function(response) {
+		        $scope.shots = response.data;
+		        console.log(response.data);
+		    });
+		});
+	</script>
 </body>
 </html>
