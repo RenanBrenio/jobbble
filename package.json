@@ -1,5 +1,5 @@
 {
-  "name": "dribbble-api",
+  "name": "Jobbble",
   "version": "1.0.0",
   "description": "a simple application using dribbble API",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RenanBrenio/dribbble-api-connect.git"
+    "url": "git+https://github.com/RenanBrenio/jobbble.git"
   },
   "keywords": [
     "dribbble"
@@ -16,7 +16,7 @@
   "author": "Renan Breno",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/RenanBrenio/dribbble-api-connect/issues"
+    "url": "https://github.com/RenanBrenio/jobbble/issues"
   },
-  "homepage": "https://github.com/RenanBrenio/dribbble-api-connect#readme"
+  "homepage": "https://github.com/RenanBrenio/jobbble#readme"
 }

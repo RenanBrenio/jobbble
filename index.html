@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="author" content="Renan Breno">
+	
+    <title>jobbble</title>
+    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/png">
+	<link rel="stylesheet" href="assets/css/themify-icons.css">
+	<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body ng-app="jobbble">
+	<main ng-controller="shotsController">
+		<input type="checkbox" id="check-shots-size" class="hidden">
+		<header>
+			<div class="container">
+				<h1>jobbble</h1>
+				<form ng-submit="search()">
+					<input type="text" id="search" ng-model="shotsSearch" ng-init="car">
+				</form>
+				<label for="check-shots-size">
+					<i class="ti-layout-grid3-alt"></i>
+					<span class="switch"></span>
+					<i class="ti-layout-grid2-alt"></i>
+				</label>
+			</div>
+		</header>
+		<ul class="shots container">
+			<li ng-repeat="shot in shots | filter : shotsSearch">
+				<a href="">
+					<img src="{{shot.images.normal}}" alt="{{shot.title}}" title="{{shot.title}}">
+					<span>{{shot.title}}</span>
+				</a>
+			</li>
+		</ul>
+	</main>
+
+	<script src="../bower_components/angular/angular.js"></script>
+	<script>
+		var app = angular.module('jobbble', []);
+		app.controller('shotsController', function($scope, $http) {
+			$http.defaults.headers.common['Authorization'] = 'Bearer a33efd0686dd49a3250322b17b2d73a3e8e9c585387321955ec0aebe0135c3a7';
+		    $http.get("https://api.dribbble.com/v1/shots")
+		    .then(function(response) {
+		        $scope.shots = response.data;
+	        	console.log(response.data);
+		    });
+		    $scope.search = function(){
+		    	/*$http.get("https://api.dribbble.com/v1/tags/" + $scope.shotsSearch)
+			    .then(function(response) {
+			        $scope.shots = response.data;
+			    });*/
+	        	console.log($scope.shotsSearch);
+		    }
+		});
+	</script>
+</body>
+</html>
