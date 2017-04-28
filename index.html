@@ -13,13 +13,22 @@
 </head>
 <body ng-app="jobbble">
 	<main ng-controller="shotsController">
-		<input type="checkbox" id="check-shots-size" class="hidden">
+		<!--
+			if this input is :checked will change the shots size
+		-->
+		<input type="checkbox" id="check-shots-size" class="hidden" autocomplete="false">
 		<header>
 			<div class="container">
 				<h1>jobbble</h1>
 				<form onSubmit="return false">
+					<!--
+						filter the listed shots by arguments
+					-->
 					<input type="text" id="search" ng-model="shotsSearch" placeholder="Search for a shot">
 				</form>
+				<!--
+					check #check-shots-size
+				-->
 				<label for="check-shots-size">
 					<i class="ti-layout-grid3-alt"></i>
 					<span class="switch"></span>
@@ -28,22 +37,44 @@
 			</div>
 		</header>
 		<ul class="shots container">
+			<!--
+				ng-repeat display all shots
+			-->
 			<li ng-repeat="shot in shots | filter : shotsSearch">
+				<!--
+					check #check-popup
+				-->
 				<label for="check-popup" ng-click="openShot(shot.id)">
 					<img src="{{shot.images.normal}}" alt="{{shot.title}}" title="{{shot.title}}">
 					<span>{{shot.title}}</span>
 				</label>
 			</li>
 		</ul>
-		<input type="checkbox" id="check-popup" class="hidden">
+		<!--
+			if it's :checked will open popup with more info
+		-->
+		<input type="checkbox" id="check-popup" class="hidden" autocomplete="false">
+		<!--
+			overlay close popup
+		-->
 		<label for="check-popup" class="overlay"></label>
 		<section class="popup container">
 			<label for="check-popup" class="popup-close"><i class="ti-close"></i></label>
 			<div class="content">
-				<img src="{{shotDetails.images.normal}}" alt="{{shotDetails.title}}" title="{{shotDetails.title}}">
+				<!--
+					if there is images.hidpi (better quality) display itself or normal quality if not
+				-->
+				<img ng-if="shotDetails.images.hidpi != null" src="{{shotDetails.images.hidpi}}" class="hidpi" alt="{{shotDetails.title}}" title="{{shotDetails.title}}">
+				<img ng-if="shotDetails.images.hidpi == null" src="{{shotDetails.images.normal}}" class="normal" alt="{{shotDetails.title}}" title="{{shotDetails.title}}">
 				<div class="details">
 					<h2>{{shotDetails.title}}</h2>
-					<p>{{shotDetails.description | htmlToPlaintext}}</p>
+					<!--
+						remove html tags
+					-->
+					<p ng-if="shotDetails.description != null">{{shotDetails.description | htmlToPlaintext}}</p>
+					<!--
+						add class Liked if its already liked or Like if not
+					-->
 					<a class="{{shotDetails.button || 'Like'}}" ng-click="likeShot()">{{shotDetails.button || 'Like'}}</a>
 				</div>
 			</div>
@@ -51,57 +82,6 @@
 	</main>
 
 	<script src="bower_components/angular/angular.js"></script>
-	<script>
-		var app = angular.module('jobbble', []);
-		app.config(function($sceDelegateProvider) {
-		    $sceDelegateProvider.resourceUrlWhitelist([
-		        'https://dribbble.com/**'
-		    ]);
-		});
-		app.controller('shotsController', function($scope, $http) {
-			$http.defaults.headers.common['Authorization'] = 'Bearer a33efd0686dd49a3250322b17b2d73a3e8e9c585387321955ec0aebe0135c3a7';
-			var apiURL = 'https://api.dribbble.com/v1/';
-
-
-		    $http.get(apiURL + 'shots')
-		    .then(function(response) {
-		        $scope.shots = response.data;
-		    });
-
-
-		    $http.get('https://dribbble.com/oauth/authorize?client_id=5a10d0527ddbef9cab8154a9af15bf3c86058d52639ddb19d1f7c44f887fbcd8&scope=public+write')
-		    .then(function(response) {
-		        $scope.shots = response.data;
-		    });
-	    	$scope.openShot = function(shotID){
-    			$http.get(apiURL + 'shots/' + shotID)
-			    .then(function(response) {
-			        $scope.shotDetails = response.data;
-
-	    			$http.get(apiURL + 'shots/' + shotID + '/like')
-				    .then(function(response) {
-				        $scope.shotDetails.like = response.data;
-				        $scope.shotDetails.button = 'Liked';
-				    }, function(){
-				        $scope.shotDetails.button = 'Like';
-				    });
-			    });
-	    		$scope.likeShot = function(){
-	    			$http.post(apiURL + 'shots/' + shotID + '/like')
-				    .then(function(response) {
-				        console.log(response.data);
-				    }, function(response){
-				        console.log(response.data);
-				    });
-	    		}
-	    	}
-		});
-		app.filter('htmlToPlaintext', function() {
-				return function(text) {
-			  		return text ? String(text).replace(/<[^>]+>/gm, '') : '';
-				};
-			}
-		);
-	</script>
+	<script src="assets/js/main.js"></script>
 </body>
 </html>
