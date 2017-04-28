@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,33 +29,79 @@
 		</header>
 		<ul class="shots container">
 			<li ng-repeat="shot in shots | filter : shotsSearch">
-				<a href="">
+				<label for="check-popup" ng-click="openShot(shot.id)">
 					<img src="{{shot.images.normal}}" alt="{{shot.title}}" title="{{shot.title}}">
 					<span>{{shot.title}}</span>
-				</a>
+				</label>
 			</li>
 		</ul>
+		<input type="checkbox" id="check-popup" class="hidden">
+		<label for="check-popup" class="overlay"></label>
+		<section class="popup container">
+			<label for="check-popup" class="popup-close"><i class="ti-close"></i></label>
+			<div class="content">
+				<img src="{{shotDetails.images.normal}}" alt="{{shotDetails.title}}" title="{{shotDetails.title}}">
+				<div class="details">
+					<h2>{{shotDetails.title}}</h2>
+					<p>{{shotDetails.description | htmlToPlaintext}}</p>
+					<a class="{{shotDetails.button || 'Like'}}" ng-click="likeShot()">{{shotDetails.button || 'Like'}}</a>
+				</div>
+			</div>
+		</section>
 	</main>
 
 	<script src="bower_components/angular/angular.js"></script>
 	<script>
 		var app = angular.module('jobbble', []);
+		app.config(function($sceDelegateProvider) {
+		    $sceDelegateProvider.resourceUrlWhitelist([
+		        'https://dribbble.com/**'
+		    ]);
+		});
 		app.controller('shotsController', function($scope, $http) {
 			$http.defaults.headers.common['Authorization'] = 'Bearer a33efd0686dd49a3250322b17b2d73a3e8e9c585387321955ec0aebe0135c3a7';
-		    //$http.get("https://api.dribbble.com/v1/shots?page=2&per_page=6")
-		    $http.get("https://api.dribbble.com/v1/shots")
+			var apiURL = 'https://api.dribbble.com/v1/';
+
+
+		    $http.get(apiURL + 'shots')
 		    .then(function(response) {
 		        $scope.shots = response.data;
-	        	console.log(response.data);
 		    });
-		    $scope.search = function(){
-		    	/*$http.get("https://api.dribbble.com/v1/tags/" + $scope.shotsSearch)
+
+
+		    $http.get('https://dribbble.com/oauth/authorize?client_id=5a10d0527ddbef9cab8154a9af15bf3c86058d52639ddb19d1f7c44f887fbcd8&scope=public+write')
+		    .then(function(response) {
+		        $scope.shots = response.data;
+		    });
+	    	$scope.openShot = function(shotID){
+    			$http.get(apiURL + 'shots/' + shotID)
 			    .then(function(response) {
-			        $scope.shots = response.data;
-			    });*/
-	        	console.log($scope.shotsSearch);
-		    }
+			        $scope.shotDetails = response.data;
+
+	    			$http.get(apiURL + 'shots/' + shotID + '/like')
+				    .then(function(response) {
+				        $scope.shotDetails.like = response.data;
+				        $scope.shotDetails.button = 'Liked';
+				    }, function(){
+				        $scope.shotDetails.button = 'Like';
+				    });
+			    });
+	    		$scope.likeShot = function(){
+	    			$http.post(apiURL + 'shots/' + shotID + '/like')
+				    .then(function(response) {
+				        console.log(response.data);
+				    }, function(response){
+				        console.log(response.data);
+				    });
+	    		}
+	    	}
 		});
+		app.filter('htmlToPlaintext', function() {
+				return function(text) {
+			  		return text ? String(text).replace(/<[^>]+>/gm, '') : '';
+				};
+			}
+		);
 	</script>
 </body>
 </html>
