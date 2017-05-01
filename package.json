@@ -2,9 +2,9 @@
   "name": "Jobbble",
   "version": "1.0.0",
   "description": "a simple application using dribbble API",
-  "main": "index.html",
+  "main": "app.js",
   "scripts": {
-    "start": "index.html",
+    "start": "node app.js",
     "test": "echo \\\\\\\"Error: no test specified\\\\\\\" && exit 1"
   },
   "repository": {
@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/RenanBrenio/jobbble/issues"
   },
-  "homepage": "https://github.com/RenanBrenio/jobbble#readme"
+  "homepage": "https://github.com/RenanBrenio/jobbble#readme",
+  "dependencies": {
+    "open": "0.0.5"
+  }
 }
